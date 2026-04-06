@@ -1,0 +1,3 @@
+[submodule "prd"]
+	path = prd
+	url = https://github.com/imwebme/foundation-docs.git
