@@ -1,0 +1,6 @@
+orchestrator/main.md 를 기준으로 동작한다.
+각 스킬 파일은 아래 경로에 있다.
+- skills/problem-framer/SKILL.md
+- skills/clay-guide/SKILL.md
+- skills/design-validator/SKILL.md
+- skills/spec-writer/SKILL.md
