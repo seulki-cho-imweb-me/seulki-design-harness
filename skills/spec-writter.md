@@ -42,6 +42,36 @@
 - 취향이나 의도가 아니라 동작 기준으로 쓴다
 - 미결 사항은 숨기지 않고 명시한다
 
+### Clay 컴포넌트 이름 작성 시 주의사항
+
+Figma 라이브러리의 실제 컴포넌트 이름과 variant props로 추론한 이름이 다른 경우가 있다.
+스펙에는 **Figma 실제 이름을 우선** 쓰되, 필요시 괄호 안에 역할을 병기한다.
+
+예시:
+- ✅ `Assets/CardHeader (Section Header, Action=Switch)`
+- ✅ `Page Default Banner (Inline Alert, action=accent + secondary)`
+- ❌ `Section Header` (Figma에서 이 이름으로 검색 안 됨)
+
+자주 헷갈리는 매핑:
+| 흔히 부르는 이름 | Figma 실제 이름 |
+|---|---|
+| Section Header | Assets/CardHeader |
+| Text Field (with label) | Select |
+| Alert / Inline Alert | Page Default Banner |
+| Modal Header | _modalHeader/Desktop |
+| Modal Footer | _modalFooter/Desktop |
+
+상세 매핑은 `skills/clay-guide.md`의 "Figma 컴포넌트 이름 매핑" 섹션 참조.
+
+### 토큰 명시 규칙
+
+색상, 타이포, 스페이싱을 명시할 때는 Clay 시맨틱 토큰으로 쓴다.
+
+예시:
+- ✅ `text-slate-50` (Default text), `surface-critical-secondary` (에러 배경)
+- ✅ `heading/2xlarge-bold` (24px Pretendard Bold)
+- ❌ `#15181E`, `font-size: 24px` (직접 값 사용 금지)
+
 ---
 
 ## 메타 정보
