@@ -171,8 +171,7 @@
       display: flex;
       flex-direction: column;
       gap: 24px;
-      max-height: calc(100vh - 160px);
-      overflow-y: auto;
+      overflow: visible;
     }
 
     /* Heading Area */
@@ -215,7 +214,7 @@
 
     /* Slider Section */
     .slider-section {
-      width: 492px;
+      width: 100%;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -2145,17 +2144,40 @@
       modal.classList.add('closing');
 
       setTimeout(() => {
+        overlay.classList.add('charged');
         overlay.style.display = 'none';
 
-        if (!autoRechargeEnabled) {
-          // Show auto-recharge prompt
-          document.getElementById('promptOverlay').classList.add('show');
+        if (window.parent !== window) {
+          // iframe 모드: 부모에게 후속 플로우 위임
+          const msg = {
+            type: 'chargeComplete',
+            showPrompt: !autoRechargeEnabled
+          };
+          // 넛지 토글 ON 상태면 자동 충전 설정값도 전달
+          if (autoRechargeEnabled) {
+            const step = STEPS[currentIndex];
+            msg.autoConfigured = true;
+            msg.condition = '100';
+            msg.amountLabel = fmtAmount(step.amount);
+          }
+          window.parent.postMessage(msg, '*');
         } else {
-          // Just show success toast
-          showChargeSuccessToast();
+          if (!autoRechargeEnabled) {
+            document.getElementById('promptOverlay').classList.add('show');
+          } else {
+            showChargeSuccessToast();
+          }
         }
       }, 200);
     }, 1400);
+  }
+
+  function closeParentModal() {
+    if (window.parent !== window) {
+      setTimeout(() => {
+        window.parent.postMessage({ type: 'closeModal' }, '*');
+      }, 500);
+    }
   }
 
   function showChargeSuccessToast() {
@@ -2167,7 +2189,11 @@
   // ── Auto Recharge Prompt ──────────────────────────────────────────────────
   function closePrompt() {
     document.getElementById('promptOverlay').classList.remove('show');
-    showChargeSuccessToast();
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'showToast', message: '충전이 완료되었습니다' }, '*');
+    } else {
+      showChargeSuccessToast();
+    }
   }
 
   // ── Auto Amount Select ─────────────────────────────────────────────────────
@@ -2243,6 +2269,10 @@
 
   function closeAutoModal() {
     document.getElementById('autoOverlay').classList.remove('show');
+    // iframe 모드: 부모 모달도 닫기
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'closeModal' }, '*');
+    }
   }
 
   function updateAutoCardSelect() {
@@ -2303,6 +2333,16 @@
     setTimeout(() => {
       toast.classList.remove('show');
     }, 2000);
+    if (window.parent !== window) {
+      const condition = document.getElementById('autoCondition').value || '100';
+      const amountLabel = selectedAutoAmount !== null ? AUTO_AMOUNTS[selectedAutoAmount].label : '10만';
+      window.parent.postMessage({
+        type: 'autoChargeConfigured',
+        condition: condition,
+        amountLabel: amountLabel,
+        message: '자동 충전을 설정했어요'
+      }, '*');
+    }
   }
 
   // Override the original updateUI to also update nudge
@@ -2321,11 +2361,47 @@
   if (window.parent !== window) {
     const style = document.createElement('style');
     style.textContent = `
-      body { background: transparent !important; display: block !important; }
+      html, body { background: transparent !important; display: block !important; overflow: hidden !important; }
       .overlay { background: transparent !important; position: static !important; display: block !important; }
-      .modal { box-shadow: none !important; border-radius: 0 !important; width: 100% !important; }
+      .overlay.charged { display: none !important; }
+      .modal { box-shadow: none !important; border-radius: 16px !important; width: 100% !important; overflow: hidden !important; }
+      .modal-body { overflow: visible !important; }
+      .auto-overlay { background: transparent !important; }
+      .prompt-overlay { background: transparent !important; }
     `;
     document.head.appendChild(style);
+
+    // 자동 충전 설정 완료 상태면 넛지 배너 숨기기 + 토글 ON
+    if (window.location.search.includes('autoConfigured=true')) {
+      const banner = document.getElementById('nudgeBanner');
+      if (banner) banner.style.display = 'none';
+      autoRechargeEnabled = true;
+      document.getElementById('nudgeSwitch').classList.add('on');
+    }
+
+    // ?mode=auto-settings: 자동 충전 설정 화면 바로 열기
+    if (window.location.search.includes('mode=auto-settings')) {
+      document.getElementById('overlay').classList.add('charged');
+
+      // URL params에서 이전 설정값 복원
+      const urlParams = new URLSearchParams(window.location.search);
+      const savedCondition = urlParams.get('condition');
+      const savedAmount = urlParams.get('amount');
+
+      setTimeout(() => {
+        if (savedCondition) {
+          document.getElementById('autoCondition').value = savedCondition;
+        }
+        if (savedAmount) {
+          // amountLabel로 매칭하여 선택
+          const idx = AUTO_AMOUNTS.findIndex(a => a.label === savedAmount);
+          if (idx !== -1) {
+            selectAutoAmount(idx);
+          }
+        }
+        openAutoModal();
+      }, 100);
+    }
   }
 </script>
 
