@@ -198,9 +198,10 @@
       background: var(--slate-tint-10);
       border-radius: 9999px;
       padding: 4px 12px;
-      font-family: var(--font-heading);
+      font-family: var(--font-body);
       font-size: 14px;
       font-weight: 600;
+      line-height: 24px;
       color: var(--text-secondary);
     }
 
@@ -583,7 +584,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 300;
+      z-index: 500;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.2s ease;
@@ -774,10 +775,38 @@
     }
 
     .reg-checkbox {
-      accent-color: var(--slate-900);
-      width: 16px;
-      height: 16px;
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--slate-300);
+      border-radius: 4px;
       cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+      transition: background 0.15s ease, border-color 0.15s ease;
+      margin: 0;
+    }
+
+    .reg-checkbox:hover {
+      border-color: var(--slate-400);
+    }
+
+    .reg-checkbox:checked {
+      background: var(--slate-900);
+      border-color: var(--slate-900);
+    }
+
+    .reg-checkbox:checked::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 5.5px;
+      width: 5px;
+      height: 9px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
     }
 
     /* Reg Footer */
@@ -827,27 +856,30 @@
     /* Card Reg Toast */
     .card-toast {
       position: fixed;
-      top: 50%;
+      bottom: 40px;
       left: 50%;
-      transform: translate(-50%, -50%);
-      background: var(--slate-900);
+      transform: translateX(-50%) translateY(16px);
+      background: rgba(21, 24, 30, 0.85);
       color: var(--text-inverse);
-      border-radius: 10px;
-      padding: 14px 20px;
-      font-family: var(--font-heading);
+      border-radius: 9999px;
+      padding: 12px 24px;
+      font-family: var(--font-body);
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 500;
       display: flex;
       align-items: center;
       gap: 8px;
       z-index: 400;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      white-space: nowrap;
     }
 
     .card-toast.show {
       opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     /* Modal Footer */
@@ -950,10 +982,9 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 14px 16px;
-      background: var(--bg-primary);
-      border: 1px solid var(--border-primary);
-      border-left: 3px solid var(--blue-500);
+      padding: 16px;
+      background: var(--blue-50);
+      border: 1px solid var(--blue-500);
       border-radius: 8px;
       position: relative;
     }
@@ -962,17 +993,22 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
     }
 
     .nudge-title {
-      font-size: 13px;
+      font-family: var(--font-body);
+      font-size: 14px;
       font-weight: 600;
+      line-height: 20px;
       color: var(--text-primary);
     }
 
     .nudge-desc {
+      font-family: var(--font-body);
       font-size: 12px;
+      font-weight: 400;
+      line-height: 16px;
       color: var(--text-secondary);
     }
 
@@ -1199,7 +1235,8 @@
     /* Amount Select */
     .auto-amount-select {
       position: relative;
-      flex: 1;
+      width: 200px;
+      flex-shrink: 0;
     }
 
     .auto-amount-trigger {
@@ -1212,11 +1249,14 @@
       color: var(--text-primary);
       background: var(--bg-primary);
       cursor: pointer;
-      display: flex;
-      align-items: center;
+      display: block;
+      line-height: 40px;
       width: 100%;
       transition: border-color 0.15s ease;
       position: relative;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .auto-amount-trigger.placeholder {
@@ -1255,11 +1295,13 @@
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
       z-index: 350;
       display: none;
-      padding: 4px;
+      flex-direction: column;
+      gap: 4px;
+      padding: 4px 8px;
     }
 
     .auto-amount-list.show {
-      display: block;
+      display: flex;
     }
 
     .auto-amount-option {
@@ -1278,54 +1320,56 @@
     }
 
     .auto-amount-option-title {
+      font-family: var(--font-body);
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 400;
+      line-height: 20px;
       color: var(--text-primary);
     }
 
     .auto-amount-option-desc {
+      font-family: var(--font-body);
       font-size: 12px;
+      font-weight: 400;
+      line-height: 16px;
       color: var(--text-secondary);
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
     .auto-footer {
-      padding: 16px 24px 24px;
+      padding: 32px 24px 24px;
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
     /* Success state */
-    .success-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
-    .success-overlay.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
     .success-toast {
-      background: var(--slate-900);
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: rgba(21, 24, 30, 0.85);
       color: var(--text-inverse);
-      border-radius: 10px;
-      padding: 14px 20px;
-      font-family: var(--font-heading);
+      border-radius: 9999px;
+      padding: 12px 24px;
+      font-family: var(--font-body);
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 500;
       display: flex;
       align-items: center;
       gap: 8px;
+      z-index: 400;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      white-space: nowrap;
+    }
+
+    .success-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
   </style>
 </head>
@@ -1420,7 +1464,7 @@
       <div class="nudge-banner" id="nudgeBanner">
         <div class="nudge-text-wrap">
           <div class="nudge-title">다음부턴 부족할 때쯤 알아서 충전할까요?</div>
-          <div class="nudge-desc" id="nudgeDesc"><span style="color:var(--blue-500)">100</span> 크레딧 남으면 <span style="color:var(--blue-500)">10만원</span>씩 자동 충전해요</div>
+          <div class="nudge-desc" id="nudgeDesc"><span style="color:var(--blue-500);font-weight:600">100</span> 크레딧 남으면 <span style="color:var(--blue-500);font-weight:600">10만원</span>씩 자동 충전해드려요</div>
         </div>
         <button class="nudge-switch" id="nudgeSwitch" onclick="toggleNudge()"></button>
       </div>
@@ -1438,7 +1482,7 @@
           </svg>
           <span class="info-text">충전한지 1년이 지났거나, 환불 금액이 천원 이하인 경우 환불되지 않습니다.</span>
         </div>
-        <button class="btn-detail">자세히</button>
+        <button class="btn-detail" onclick="window.open('https://imweb.me/faq?mode=view&category=30&category2=46&idx=233','_blank')">자세히</button>
       </div>
       <button class="btn-charge" id="btnCharge" onclick="handleCharge()">충전</button>
     </div>
@@ -1450,21 +1494,19 @@
 <div class="card-option-list" id="cardOptionList"></div>
 
 <!-- Success Toast -->
-<div class="success-overlay" id="successOverlay">
-  <div class="success-toast">
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-      <circle cx="9" cy="9" r="8" stroke="#4ADE80" stroke-width="1.5"/>
-      <path d="M5.5 9L7.5 11L12.5 6.5" stroke="#4ADE80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    충전이 완료되었습니다
-  </div>
+<div class="success-toast" id="successToast">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <circle cx="9" cy="9" r="8" fill="#4ADE80"/>
+    <path d="M5.5 9L7.5 11L12.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  충전이 완료되었습니다
 </div>
 
 <!-- Card Registration Modal -->
 <div class="reg-overlay" id="regOverlay">
   <div class="reg-modal">
     <div class="reg-header">
-      <div class="reg-heading"><span class="reg-title">카드 등록</span></div>
+      <div class="reg-heading"><span class="reg-title" style="font-family:var(--font-heading);font-size:24px;font-weight:700;line-height:32px">카드 등록</span></div>
       <button class="btn-close" onclick="closeRegModal()" aria-label="닫기">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
@@ -1584,7 +1626,7 @@
 <div class="auto-overlay" id="autoOverlay">
   <div class="auto-modal">
     <div class="modal-header">
-      <div class="modal-heading"><span class="modal-title" style="font-size:18px">자동 충전 설정</span></div>
+      <div class="modal-heading"><span class="modal-title" style="font-family:var(--font-heading);font-size:24px;font-weight:700;line-height:32px">자동 충전 설정</span></div>
       <button class="btn-close" onclick="closeAutoModal()" aria-label="닫기">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
@@ -1635,7 +1677,7 @@
           </svg>
           <span class="info-text">충전한지 1년이 지났거나, 환불 금액이 천원 이하인 경우 환불되지 않습니다.</span>
         </div>
-        <button class="btn-detail">자세히</button>
+        <button class="btn-detail" onclick="window.open('https://imweb.me/faq?mode=view&category=30&category2=46&idx=233','_blank')">자세히</button>
       </div>
       <button class="btn-charge" onclick="saveAutoRecharge()">설정</button>
     </div>
@@ -1647,13 +1689,13 @@
   const STEPS = [
     { amount: 10000,   base: 500,    bonus: 0,       label: '1만' },
     { amount: 20000,   base: 1000,   bonus: 100,     label: '2만' },
-    { amount: 30000,   base: 1500,   bonus: 250,     label: '3만' },
+    { amount: 50000,   base: 2750,   bonus: 950,     label: '5만' },
     { amount: 100000,  base: 5000,   bonus: 1250,    label: '10만' },
-    { amount: 300000,  base: 15000,  bonus: 5000,    label: '30만' },
-    { amount: 500000,  base: 25000,  bonus: 10000,   label: '50만' },
-    { amount: 1000000, base: 50000,  bonus: 25000,   label: '100만' },
-    { amount: 3000000, base: 150000, bonus: 90000,   label: '300만' },
-    { amount: 5000000, base: 250000, bonus: 175000,  label: '500만' },
+    { amount: 300000,  base: 15000,  bonus: 4500,    label: '30만' },
+    { amount: 500000,  base: 25000,  bonus: 8750,    label: '50만' },
+    { amount: 1000000, base: 50000,  bonus: 22550,   label: '100만' },
+    { amount: 3000000, base: 150000, bonus: 67500,   label: '300만' },
+    { amount: 5000000, base: 250000, bonus: 112500,  label: '500만' },
   ];
 
   const POPULAR_INDEX = 3;   // 10만 (index 3)
@@ -1668,10 +1710,6 @@
   }
 
   function fmtAmount(amount) {
-    if (amount >= 1000000) {
-      const m = amount / 1000000;
-      return (Number.isInteger(m) ? m : m.toFixed(1)) + '백만원';
-    }
     if (amount >= 10000) {
       const w = amount / 10000;
       return (Number.isInteger(w) ? w : w.toFixed(1)) + '만원';
@@ -1728,7 +1766,8 @@
     const totalCredits = step.base + step.bonus;
     const vat = Math.round(step.amount * 0.1);
     const totalAmount = step.amount + vat;
-    const perUnit = (step.amount / totalCredits).toFixed(1);
+    const perUnitRaw = step.amount / totalCredits;
+    const perUnit = Number.isInteger(perUnitRaw) ? perUnitRaw.toString() : perUnitRaw.toFixed(1);
 
     // Heading
     document.getElementById('amountText').textContent = fmtAmount(step.amount);
@@ -1736,7 +1775,7 @@
 
     let subStr;
     if (step.bonus === 0) {
-      subStr = `기본 ${fmt(step.base)} (크레딧 당 ${perUnit}원 꼴)`;
+      subStr = `기본 ${fmt(step.base)} + 보너스 없음 (크레딧 당 ${perUnit}원 꼴)`;
     } else {
       subStr = `기본 ${fmt(step.base)} + 보너스 ${fmt(step.bonus)} (크레딧 당 ${perUnit}원 꼴)`;
     }
@@ -1831,6 +1870,11 @@
 
   // ── Close ──────────────────────────────────────────────────────────────────
   function closeModal() {
+    // If running inside an iframe, notify the parent to close the overlay
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'closeModal' }, '*');
+      return;
+    }
     const overlay = document.getElementById('overlay');
     const modal = document.getElementById('modal');
     overlay.classList.add('closing');
@@ -1952,17 +1996,21 @@
     selectedCardId = id;
     cardListOpen = false;
     document.getElementById('cardSelect').classList.remove('open');
+    document.getElementById('autoCardSelect').classList.remove('open');
     document.getElementById('cardOptionList').classList.remove('show');
     updateCardSelect();
+    updateAutoCardSelect();
   }
 
   // Close option list on outside click
   document.addEventListener('click', (e) => {
     const select = document.getElementById('cardSelect');
+    const autoSelect = document.getElementById('autoCardSelect');
     const list = document.getElementById('cardOptionList');
-    if (cardListOpen && !select.contains(e.target) && !list.contains(e.target)) {
+    if (cardListOpen && !select.contains(e.target) && !autoSelect.contains(e.target) && !list.contains(e.target)) {
       cardListOpen = false;
       select.classList.remove('open');
+      autoSelect.classList.remove('open');
       list.classList.remove('show');
     }
   });
@@ -2073,7 +2121,7 @@
     const step = STEPS[currentIndex];
     const label = fmtAmount(step.amount);
     document.getElementById('nudgeDesc').innerHTML =
-      `<span style="color:var(--blue-500)">100</span> 크레딧 남으면 <span style="color:var(--blue-500)">${label}</span>씩 자동 충전해요`;
+      `<span style="color:var(--blue-500);font-weight:600">100</span> 크레딧 남으면 <span style="color:var(--blue-500);font-weight:600">${label}</span>씩 자동 충전해드려요`;
   }
 
   // ── Charge Flow (updated) ─────────────────────────────────────────────────
@@ -2111,7 +2159,7 @@
   }
 
   function showChargeSuccessToast() {
-    const toast = document.getElementById('successOverlay');
+    const toast = document.getElementById('successToast');
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 2000);
   }
@@ -2123,12 +2171,18 @@
   }
 
   // ── Auto Amount Select ─────────────────────────────────────────────────────
-  const AUTO_AMOUNTS = STEPS.map(s => ({
-    amount: s.amount,
-    credits: s.base + s.bonus,
-    perUnit: (s.amount / (s.base + s.bonus)).toFixed(1),
-    label: fmtAmount(s.amount),
-  }));
+  const AUTO_AMOUNTS = STEPS.filter(s => s.amount >= 10000).map(s => {
+    const credits = s.base + s.bonus;
+    const perUnit = (s.amount / credits).toFixed(1);
+    const suffix = s.amount >= 500000 ? ' 꼴' : '';
+    return {
+      amount: s.amount,
+      credits,
+      perUnit,
+      suffix,
+      label: fmtAmount(s.amount),
+    };
+  });
 
   let selectedAutoAmount = null;
   let autoAmountOpen = false;
@@ -2139,7 +2193,7 @@
       const sel = selectedAutoAmount === i ? 'selected' : '';
       return `<div class="auto-amount-option ${sel}" onclick="selectAutoAmount(${i})">
         <div class="auto-amount-option-title">${a.label}</div>
-        <div class="auto-amount-option-desc">${fmt(a.credits)} 크레딧 (건당 ${a.perUnit}원)</div>
+        <div class="auto-amount-option-desc">${fmt(a.credits)} 크레딧 (크레딧 당 ${a.perUnit}원${a.suffix})</div>
       </div>`;
     }).join('');
   }
@@ -2217,8 +2271,20 @@
   }
 
   function toggleAutoCardList() {
-    // Reuse main card list for simplicity
-    toggleCardList();
+    if (!cards.length) return;
+    cardListOpen = !cardListOpen;
+    const select = document.getElementById('autoCardSelect');
+    const list = document.getElementById('cardOptionList');
+    select.classList.toggle('open', cardListOpen);
+    list.classList.toggle('show', cardListOpen);
+    if (cardListOpen) {
+      renderCardOptionList();
+      const rect = select.getBoundingClientRect();
+      list.style.top = (rect.bottom + 4) + 'px';
+      list.style.left = rect.left + 'px';
+      list.style.width = rect.width + 'px';
+      list.style.zIndex = '400';
+    }
   }
 
   function saveAutoRecharge() {
@@ -2227,7 +2293,6 @@
     document.getElementById('nudgeSwitch').classList.add('on');
 
     const toast = document.getElementById('cardToast');
-    toast.querySelector('svg + *')?.remove;
     toast.innerHTML = `
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
         <circle cx="9" cy="9" r="8" fill="#4ADE80"/>
@@ -2237,12 +2302,6 @@
     toast.classList.add('show');
     setTimeout(() => {
       toast.classList.remove('show');
-      toast.innerHTML = `
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <circle cx="9" cy="9" r="8" fill="#4ADE80"/>
-          <path d="M5.5 9L7.5 11L12.5 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        카드를 등록했어요`;
     }, 2000);
   }
 
@@ -2257,6 +2316,17 @@
   buildLabels();
   updateUI();
   updateCardSelect();
+
+  // ── Iframe mode: hide inner backdrop and body background ──────────────────
+  if (window.parent !== window) {
+    const style = document.createElement('style');
+    style.textContent = `
+      body { background: transparent !important; display: block !important; }
+      .overlay { background: transparent !important; position: static !important; display: block !important; }
+      .modal { box-shadow: none !important; border-radius: 0 !important; width: 100% !important; }
+    `;
+    document.head.appendChild(style);
+  }
 </script>
 
 </body>
