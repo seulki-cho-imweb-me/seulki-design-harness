@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1775609343091,
+  "lastScanned": 1775723486443,
   "projectRoot": "/Users/seulki.cho/seulki-design-harness",
   "techStack": {
     "languages": [],
@@ -36,7 +36,7 @@
       "path": "orchestrator",
       "purpose": null,
       "fileCount": 1,
-      "lastAccessed": 1775609343077,
+      "lastAccessed": 1775723486426,
       "keyFiles": [
         "main.md"
       ]
@@ -44,15 +44,15 @@
     "prototypes": {
       "path": "prototypes",
       "purpose": null,
-      "fileCount": 0,
-      "lastAccessed": 1775609343077,
+      "fileCount": 1,
+      "lastAccessed": 1775723486426,
       "keyFiles": []
     },
     "skills": {
       "path": "skills",
       "purpose": null,
       "fileCount": 4,
-      "lastAccessed": 1775609343077,
+      "lastAccessed": 1775723486427,
       "keyFiles": [
         "clay-guide.md",
         "design-validator.md",
@@ -64,51 +64,15 @@
   "hotPaths": [
     {
       "path": "prototypes/fs-2745-auto-recharge/credit-recharge-modal.html",
-      "accessCount": 106,
-      "lastAccessed": 1775554135994,
+      "accessCount": 4,
+      "lastAccessed": 1775723865556,
       "type": "file"
     },
     {
-      "path": "skills/clay-guide.md",
-      "accessCount": 11,
-      "lastAccessed": 1775522164745,
-      "type": "file"
-    },
-    {
-      "path": "prototypes/fs-2745-auto-recharge/index.html",
-      "accessCount": 3,
-      "lastAccessed": 1775471941309,
-      "type": "file"
-    },
-    {
-      "path": "skills/design-validator.md",
-      "accessCount": 3,
-      "lastAccessed": 1775472932807,
-      "type": "file"
-    },
-    {
-      "path": "skills/spec-writter.md",
-      "accessCount": 3,
-      "lastAccessed": 1775472948505,
-      "type": "file"
-    },
-    {
-      "path": "CLAUDE.md",
+      "path": "",
       "accessCount": 2,
-      "lastAccessed": 1775473159884,
-      "type": "file"
-    },
-    {
-      "path": "orchestrator/main.md",
-      "accessCount": 1,
-      "lastAccessed": 1775465645085,
-      "type": "file"
-    },
-    {
-      "path": "skills/problem-framer.md",
-      "accessCount": 1,
-      "lastAccessed": 1775465658791,
-      "type": "file"
+      "lastAccessed": 1775723853897,
+      "type": "directory"
     }
   ],
   "userDirectives": []
